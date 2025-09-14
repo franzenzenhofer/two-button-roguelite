@@ -76,9 +76,21 @@ async function deploy() {
     // 7. Post-deploy tests - MANDATORY!
     log.info('Waiting for propagation...');
     await new Promise(r => setTimeout(r, 5000));
-    log.section('TESTING LIVE SITE - NO MOCKS!');
-    exec('node scripts/test-live-site.js');
-    log.success('Live site tests passed!');
+    log.section('TESTING LIVE SITE WITH PLAYWRIGHT!');
+
+    // Run Playwright E2E tests on live site
+    try {
+      exec('npx playwright test e2e/live-site.spec.ts --reporter=list');
+      log.success('Live site tests passed!');
+    } catch (e) {
+      log.error('LIVE SITE TESTS FAILED!');
+      log.error('The game is BROKEN on production!');
+
+      // Run debug script to understand why
+      exec('node scripts/debug-live-site.js --headless', true);
+
+      throw new Error('DEPLOYMENT FAILED - GAME DOES NOT WORK!');
+    }
 
     log.section(`🎉 DEPLOYED v${pkg.version} to https://roguelike.franzai.com`);
   } catch (e) {

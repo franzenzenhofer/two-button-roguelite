@@ -16,7 +16,7 @@ export function gameReducer(
 ): GameState {
   switch (action.type) {
     case 'NEW_GAME':
-      return createInitialState(action.seed);
+      return { ...createInitialState(action.seed), mode: 'PLAYING' };
 
     case 'CHOOSE_PERK':
       if (!state.perkChoice) return state;
@@ -44,7 +44,7 @@ export function gameReducer(
 
 function createInitialState(seed: number): GameState {
   return {
-    mode: 'MENU',
+    mode: 'MENU',  // Back to MENU for initial state
     seed,
     lane: 1,
     distance: 0,
