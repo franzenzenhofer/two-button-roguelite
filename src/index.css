@@ -1,0 +1,56 @@
+/* Global styles - max 50 lines */
+.hud-item {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+}
+
+.controls {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: max(10px, env(safe-area-inset-bottom));
+  padding: 0 12px 8px;
+  display: flex;
+  gap: 12px;
+}
+
+.btn {
+  flex: 1;
+  height: 72px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--fg);
+  font-weight: 800;
+  font-size: 20px;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.1s;
+}
+
+.btn:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(12, 15, 19, 0.95);
+  padding: 18px;
+}
+
+.card {
+  width: min(640px, 92vw);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 24px;
+}

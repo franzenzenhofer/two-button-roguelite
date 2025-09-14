@@ -1,0 +1,56 @@
+/* App styles - max 50 lines */
+:root {
+  --bg: #0c0f13;
+  --fg: #e8f1ff;
+  --muted: #9fb3c8;
+  --accent: #4dd0ff;
+  --good: #8df18d;
+  --bad: #ff4d6d;
+  --gold: #ffd166;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: system-ui, -apple-system, sans-serif;
+  overflow: hidden;
+}
+
+.app {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.game-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+.hud {
+  position: absolute;
+  top: env(safe-area-inset-top);
+  left: 0;
+  right: 0;
+  padding: 10px 14px;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}

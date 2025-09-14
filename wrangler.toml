@@ -1,0 +1,15 @@
+name = "two-button-roguelite"
+compatibility_date = "2025-07-26"
+
+[site]
+bucket = "./dist"
+
+[[routes]]
+pattern = "two-button.franzai.com/*"
+zone_name = "franzai.com"
+
+[env.preview]
+name = "two-button-roguelite-preview"
+routes = [
+  { pattern = "preview.two-button.franzai.com/*", zone_name = "franzai.com" }
+]
