@@ -26,7 +26,7 @@
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\"",
     "analyze": "vite-bundle-visualizer",
     "predeploy": "npm run typecheck",
-    "deploy": "npm run predeploy && npm run build && node scripts/deploy.js",
+    "deploy": "node scripts/deploy-complete.js",
     "deploy:preview": "npm run predeploy && node scripts/deploy.js --preview",
     "deploy:patch": "npm version patch && npm run deploy",
     "deploy:minor": "npm version minor && npm run deploy",

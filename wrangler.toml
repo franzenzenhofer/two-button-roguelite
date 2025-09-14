@@ -1,15 +1,16 @@
-name = "two-button-roguelite"
+name = "roguelike"
+main = "_worker.js"
 compatibility_date = "2025-07-26"
 
-[site]
-bucket = "./dist"
+[assets]
+directory = "./dist"
 
 [[routes]]
-pattern = "two-button.franzai.com/*"
+pattern = "roguelike.franzai.com/*"
 zone_name = "franzai.com"
 
 [env.preview]
-name = "two-button-roguelite-preview"
+name = "roguelike-preview"
 routes = [
-  { pattern = "preview.two-button.franzai.com/*", zone_name = "franzai.com" }
+  { pattern = "preview.roguelike.franzai.com/*", zone_name = "franzai.com" }
 ]

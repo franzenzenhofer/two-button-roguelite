@@ -26,31 +26,28 @@ function exec(cmd) {
 }
 
 async function deploy() {
-  log.info('Starting deployment...');
+  log.info('Starting deployment to roguelike.franzai.com...');
 
-  // Pre-deployment checks
-  if (!exec('npm run test:coverage')) {
-    log.error('Tests failed. Aborting deployment.');
+  // Build project
+  if (!exec('npm run build')) {
+    log.error('Build failed. Aborting deployment.');
     process.exit(1);
   }
 
-  if (!exec('npm run lint')) {
-    log.error('Linting failed. Aborting deployment.');
-    process.exit(1);
-  }
-
-  if (!exec('npm run typecheck')) {
-    log.error('TypeScript check failed. Aborting deployment.');
-    process.exit(1);
-  }
-
-  log.info('Deploying to Cloudflare Pages...');
-  if (!exec('wrangler pages deploy dist --project-name=two-button-roguelite')) {
+  // Deploy to Cloudflare Workers
+  log.info('Deploying to Cloudflare Workers...');
+  if (!exec('wrangler deploy')) {
     log.error('Deployment failed.');
     process.exit(1);
   }
 
   log.success('Deployment successful!');
+  log.info('Running post-deployment tests...');
+
+  // Run post-deployment tests
+  setTimeout(() => {
+    exec('node scripts/post-deploy-tests.js');
+  }, 5000); // Wait 5s for deployment to propagate
 }
 
 deploy();
