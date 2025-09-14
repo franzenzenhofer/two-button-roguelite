@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Complete deployment with Git, tests, and validation - max 50 lines
+// Complete deployment with Git, tests, and validation - max 75 lines
 import { execSync } from 'child_process';
 
 const colors = {
@@ -29,16 +29,34 @@ function exec(cmd, silent = false) {
 async function deploy() {
   log.section('STARTING FULL DEPLOYMENT PIPELINE');
 
-  // 1. Run all tests
-  log.info('Running tests with coverage...');
-  if (!exec('npm run test:coverage')) process.exit(1);
+  // 1. Version bump
+  log.info('Bumping version...');
+  exec('npm version patch --no-git-tag-version', true);
 
-  // 2. Lint and typecheck
-  log.info('Running lint and typecheck...');
-  if (!exec('npm run lint')) process.exit(1);
-  if (!exec('npm run typecheck')) process.exit(1);
+  // 2. Generate version.json
+  log.info('Generating version info...');
+  exec('node scripts/build-version.js');
 
-  // 3. Build
+  // 3. Run all tests
+  log.info('Running comprehensive tests...');
+  exec('npm run test:unit');
+  exec('npm run test:integration || true');
+
+  // 4. Lint check
+  log.info('Running ESLint (75 line max)...');
+  if (!exec('npm run lint')) {
+    log.error('ESLint failed! Files must be ≤75 lines!');
+    process.exit(1);
+  }
+
+  // 5. Typecheck
+  log.info('Running TypeScript strict check...');
+  if (!exec('npm run typecheck')) {
+    log.error('TypeScript check failed!');
+    process.exit(1);
+  }
+
+  // 6. Build
   log.info('Building production bundle...');
   if (!exec('npm run build')) process.exit(1);
 

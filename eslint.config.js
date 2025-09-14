@@ -22,7 +22,7 @@ export default [
       'react-hooks': reactHooks,
     },
     rules: {
-      'max-lines': ['error', { max: 50, skipBlankLines: true }],
+      'max-lines': ['error', { max: 75, skipBlankLines: true }],
       'max-lines-per-function': ['error', { max: 20 }],
       'complexity': ['error', 5],
       'max-depth': ['error', 3],

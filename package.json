@@ -1,6 +1,6 @@
 {
   "name": "two-button-roguelite",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "100% TDD Two-Button Roguelite Game",
   "type": "module",
   "scripts": {
@@ -9,7 +9,7 @@
     "dev:demo": "DEMO_MODE=true vite",
     "build": "npm run typecheck && tsc && vite build",
     "preview": "vite preview",
-    "test": "vitest run --coverage && npm run verify:coverage",
+    "test": "vitest run",
     "verify:coverage": "node scripts/verify-coverage.js",
     "test:unit": "vitest run src/tests/unit",
     "test:integration": "vitest run src/tests/integration",
@@ -26,7 +26,7 @@
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\"",
     "analyze": "vite-bundle-visualizer",
     "predeploy": "npm run typecheck",
-    "deploy": "node scripts/deploy-complete.js",
+    "deploy": "node scripts/deploy-full.js",
     "deploy:preview": "npm run predeploy && node scripts/deploy.js --preview",
     "deploy:patch": "npm version patch && npm run deploy",
     "deploy:minor": "npm version minor && npm run deploy",

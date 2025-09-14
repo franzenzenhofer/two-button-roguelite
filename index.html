@@ -10,6 +10,25 @@
   </head>
   <body>
     <div id="root"></div>
+    <div id="version-info" style="position: fixed; bottom: 5px; right: 5px; font-size: 10px; color: #666; font-family: monospace; z-index: 9999;">
+      <span id="version">v1.0.0</span> |
+      <span id="deploy-time">Loading...</span>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Auto-update version and deployment time
+      fetch('/version.json')
+        .then(r => r.json())
+        .then(data => {
+          document.getElementById('version').textContent = `v${data.version}`;
+          const deployTime = new Date(data.deployTime);
+          const userTime = deployTime.toLocaleString();
+          document.getElementById('deploy-time').textContent = userTime;
+        })
+        .catch(() => {
+          const now = new Date().toLocaleString();
+          document.getElementById('deploy-time').textContent = now;
+        });
+    </script>
   </body>
 </html>

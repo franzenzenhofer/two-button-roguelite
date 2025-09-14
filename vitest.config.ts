@@ -17,6 +17,8 @@ export default defineConfig({
         '*.config.{js,ts}',
         'src/tests/**',
         'src/main.tsx',
+        'dist/**',
+        '_worker.js',
       ],
       thresholds: {
         branches: 75,
