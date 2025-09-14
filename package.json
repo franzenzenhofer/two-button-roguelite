@@ -1,6 +1,6 @@
 {
   "name": "two-button-roguelite",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "100% TDD Two-Button Roguelite Game",
   "type": "module",
   "scripts": {

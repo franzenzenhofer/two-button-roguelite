@@ -8,7 +8,7 @@ describe('FULL GAME FLOW - 100% COVERAGE', () => {
     const { container } = render(<App />);
 
     // 1. Game starts in MENU mode
-    expect(screen.getByText('Game Component')).toBeInTheDocument();
+    expect(screen.getByText('Two-Button Roguelite')).toBeInTheDocument();
 
     // 2. All UI elements exist
     const app = container.querySelector('.app');

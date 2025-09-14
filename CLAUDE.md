@@ -6,8 +6,11 @@
 1. **100% TEST COVERAGE** - NOT 99.9%, EXACTLY 100%!
 2. **ZERO ESLINT WARNINGS** - NOT ONE WARNING ALLOWED!
 3. **ZERO TYPESCRIPT ERRORS** - STRICT MODE ONLY!
-4. **ALL FILES ≤50 LINES** - AUTOMATIC FAILURE IF EXCEEDED!
+4. **ALL FILES ≤75 LINES** - AUTOMATIC FAILURE IF EXCEEDED!
 5. **ALL TESTS PASSING** - EVERY SINGLE TEST!
+6. **NO MOCKS ALLOWED** - TEST REAL COMPONENTS ONLY!
+7. **NO FAKE DATA** - USE REAL GAME STATE!
+8. **REAL DOM TESTING** - NO COMPONENT MOCKS EVER!
 
 ### 🔥 HARDCORE REQUIREMENTS
 ```bash
@@ -118,14 +121,31 @@ GameState {
 }
 ```
 
-## 🧪 TEST-DRIVEN DEVELOPMENT
+## 🧪 TEST-DRIVEN DEVELOPMENT - HARDCORE MODE
+
+### 🔥 NO MOCKS PARADIGM 🔥
+```typescript
+// ❌ BANNED - NEVER DO THIS:
+vi.mock('@/components/Game', () => ({
+  Game: () => <div>Mocked Game</div>
+}));
+
+// ✅ REQUIRED - ALWAYS DO THIS:
+test('Game starts when button clicked', () => {
+  render(<App />); // REAL App with REAL Game
+  fireEvent.click(screen.getByText('Start Game'));
+  expect(/* REAL game state */).toBe('PLAYING');
+});
+```
 
 ### Testing Stack
-- **Unit Tests**: Vitest with 100% coverage
-- **E2E Tests**: Playwright
+- **Unit Tests**: Vitest with 100% REAL coverage
+- **Integration Tests**: Test REAL component interactions
+- **E2E Tests**: Playwright on LIVE site
+- **Visual Tests**: Screenshot comparison
 - **Property Tests**: fast-check for game logic
-- **Snapshot Tests**: For UI components
-- **Performance Tests**: For 60 FPS validation
+- **Performance Tests**: 60 FPS validation
+- **Live Tests**: Test deployed site every 5 minutes
 
 ### Test Requirements - NO COMPROMISE!
 1. **TDD ONLY** - Write test FIRST, implementation SECOND

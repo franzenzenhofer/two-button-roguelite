@@ -1,53 +1,60 @@
-// Canvas component tests - 100% coverage - max 50 lines
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, cleanup } from '@testing-library/react';
+// Canvas component tests - REAL RENDERING - NO MOCKS!
+import { describe, it, expect } from 'vitest';
+import { render } from '@testing-library/react';
 import { Canvas } from '@/components/Canvas';
-import * as GameContext from '@/store/GameContext';
+import { GameProvider } from '@/store/GameContext';
 
-vi.mock('@/utils/renderer', () => ({
-  drawGame: vi.fn()
-}));
+// Helper to render Canvas with provider
+const renderCanvas = () => {
+  return render(
+    <GameProvider>
+      <Canvas />
+    </GameProvider>
+  );
+};
 
-describe('Canvas Component', () => {
-  const mockState = {
-    mode: 'PLAYING' as const,
-    seed: 123,
-    lane: 1 as const,
-    distance: 0,
-    score: 0,
-    shards: 0,
-    speed: 240,
-    shield: 0,
-    magnet: 0,
-    scoreMult: 1,
-    time: 0,
-    dt: 0,
-    entities: [],
-    safeLane: 1 as const,
-    safeHistory: [],
-  };
 
-  beforeEach(() => {
-    vi.clearAllMocks();
-    vi.spyOn(GameContext, 'useGame').mockReturnValue({
-      state: mockState,
-      dispatch: vi.fn(),
-    });
-  });
-
-  afterEach(() => {
-    cleanup();
-  });
-
-  it('should render canvas element', () => {
-    const { container } = render(<Canvas />);
+describe('Canvas Component - REAL TESTS', () => {
+  it('renders canvas element', () => {
+    const { container } = renderCanvas();
     const canvas = container.querySelector('canvas');
+
     expect(canvas).toBeInTheDocument();
     expect(canvas).toHaveClass('game-canvas');
   });
 
-  it('should setup canvas context', () => {
-    render(<Canvas />);
-    expect(HTMLCanvasElement.prototype.getContext).toHaveBeenCalled();
+  it('gets 2D rendering context', () => {
+    const { container } = renderCanvas();
+    const canvas = container.querySelector('canvas') as HTMLCanvasElement;
+
+    const ctx = canvas?.getContext('2d');
+    expect(ctx).toBeTruthy();
+  });
+
+  it('renders with dimensions', () => {
+    const { container } = renderCanvas();
+    const canvas = container.querySelector('canvas') as HTMLCanvasElement;
+
+    // Canvas will be sized based on window size
+    expect(canvas).toBeInTheDocument();
+    expect(canvas.width).toBeGreaterThan(0);
+    expect(canvas.height).toBeGreaterThan(0);
+  });
+
+  it('has aria label', () => {
+    const { container } = renderCanvas();
+    const canvas = container.querySelector('canvas');
+
+    expect(canvas).toHaveAttribute('aria-label', 'Game Canvas');
+  });
+
+  it('handles resize', () => {
+    renderCanvas();
+
+    // Trigger resize
+    window.dispatchEvent(new Event('resize'));
+
+    // Canvas should still be present
+    expect(document.querySelector('canvas')).toBeInTheDocument();
   });
 });

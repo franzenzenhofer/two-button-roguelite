@@ -73,10 +73,12 @@ async function deploy() {
     exec('git tag -a v' + pkg.version + ' -m "Release v' + pkg.version + '"');
     exec('git push origin master --tags');
 
-    // 7. Post-deploy tests
+    // 7. Post-deploy tests - MANDATORY!
     log.info('Waiting for propagation...');
     await new Promise(r => setTimeout(r, 5000));
-    exec('node scripts/post-deploy-tests.js');
+    log.section('TESTING LIVE SITE - NO MOCKS!');
+    exec('node scripts/test-live-site.js');
+    log.success('Live site tests passed!');
 
     log.section(`🎉 DEPLOYED v${pkg.version} to https://roguelike.franzai.com`);
   } catch (e) {
